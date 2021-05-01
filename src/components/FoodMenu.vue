@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div>
       <img src="../assets/Search.svg" alt="search" />
       <input
@@ -45,7 +45,7 @@ export default {
     return {
       queryInput: "",
       count: 1,
-      itemCount: 0
+      itemCount: 0,
     };
   },
   created() {
@@ -64,15 +64,16 @@ export default {
     },
     addToBasket(item) {
       this.itemCount = localStorage.getItem(item.name);
-      if (this.itemCount) {
-          console.log("yep");
-          localStorage.setItem(item.name, parseInt(this.itemCount) + 1);
+      if(!this.itemCount) {
+        return localStorage.setItem(item.name, this.count);
+      } 
+
+      if (this.itemCount && (item.stock.availability > parseInt(this.itemCount))) {
+        return localStorage.setItem(item.name, parseInt(this.itemCount) + 1);
       } 
       else {
-          console.log("nope");
-          localStorage.setItem(item.name, this.count);
+        return console.log("Item unavailable");
       }
-      console.log(localStorage) 
     },
   },
   computed: {
@@ -90,6 +91,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    margin: 0 auto;
+}
 .item-container {
   display: flex;
   justify-content: space-between;
