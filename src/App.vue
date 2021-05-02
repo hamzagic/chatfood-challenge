@@ -19,11 +19,12 @@ export default {
   font-family: Inter, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 100%;
+  width: 375px;
   max-width: 375px;
   /* height: 2839px; */
   left: 0px;
   top: 0px;
+  box-sizing: border-box;
   background-color: #ffffff;
   color: #071C4D;
   height: 100vh;

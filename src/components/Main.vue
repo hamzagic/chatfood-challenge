@@ -1,22 +1,18 @@
 <template>
   <div>
-    <img src="../assets/Back.svg" alt="arrow" @click="resetBasket()" />
+    <img src="../assets/Back.svg" alt="arrow" @click="resetBasket()" class="back" />
     <div class="container">
-      <p class="titles">Search</p>
-      <!-- <Search /> -->
       <FoodMenu />
     </div>
   </div>
 </template>
 
 <script>
-// import Search from './Search';
 import FoodMenu from "./FoodMenu";
 
 export default {
   name: "Main",
   components: {
-    // Search,
     FoodMenu,
   },
   props: {},
@@ -29,4 +25,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+}
+.back {
+  margin-top: 49px;
+  padding: 0px 16px;
+}
 </style>

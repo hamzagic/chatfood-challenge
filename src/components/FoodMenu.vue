@@ -1,25 +1,35 @@
 <template>
   <div class="container">
-    <div>
-      <img src="../assets/Search.svg" alt="search" />
-      <input
-        type="text"
-        v-model="queryInput"
-        placeholder="Search for dishes..."
-      />
+    <div class="horizontal-padding">
+      <p class="titles">Search</p>
+      <div class="input-container">
+        <img src="../assets/Search.svg" alt="search" class="search-icon" />
+        <input
+          type="text"
+          v-model="queryInput"
+          placeholder="Search for dishes..."
+          class="input"
+        />
+      </div>
     </div>
-    <div v-for="(cat, id) in categories" :key="id">
-      <div class="titles">{{ cat.name }}</div>
+    <div v-for="(cat, id) in categories" :key="id" class="content-container">
+      <div class="titles horizontal-padding">{{ cat.name }}</div>
       <div v-for="(item, id) in queryResult" :key="id">
         <div v-if="item.category_id == cat.id" class="item-container">
           <div class="item-data">
-            <p class="dish-title" @click="addToBasket(item)">{{ item.name }}</p>
-            <div class="dish-description">{{ item.description }}</div>
+            <p class="dish-title horizontal-padding" @click="addToBasket(item)">
+              {{ item.name }}
+            </p>
+            <div class="dish-description horizontal-padding">
+              {{ item.description }}
+            </div>
             <div class="prices">
-              <div class="item-discount">
+              <div class="item-current horizontal-padding">
                 {{ calculateDiscount(item.price, item.discount_rate) }}
               </div>
-              <div class="item-full-price">{{ formatPrice(item.price) }}</div>
+              <div class="item-price-original" v-if="item.discount_rate != 0">
+                {{ formatPrice(item.price) }}
+              </div>
             </div>
           </div>
           <img
@@ -59,19 +69,20 @@ export default {
     },
     calculateDiscount(value, discount) {
       this.newValue = value - value * discount;
-      // if(this.newValue != value)
       return (this.newValue / 100).toFixed(2);
     },
     addToBasket(item) {
       this.itemCount = localStorage.getItem(item.name);
-      if(!this.itemCount) {
+      if (!this.itemCount) {
         return localStorage.setItem(item.name, this.count);
-      } 
+      }
 
-      if (this.itemCount && (item.stock.availability > parseInt(this.itemCount))) {
+      if (
+        this.itemCount &&
+        item.stock.availability > parseInt(this.itemCount)
+      ) {
         return localStorage.setItem(item.name, parseInt(this.itemCount) + 1);
-      } 
-      else {
+      } else {
         return console.log("Item unavailable");
       }
     },
@@ -92,7 +103,11 @@ export default {
 
 <style scoped>
 .container {
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+.horizontal-padding {
+  padding: 0px 16px;
 }
 .item-container {
   display: flex;
@@ -137,16 +152,51 @@ export default {
 
 .prices {
   display: flex;
-  justify-content: space-around;
 }
 
-.item-price-full {
+.item-current {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
 }
 
-.item-price-discount {
+.item-price-original {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  color: #838da6;
+  text-decoration: line-through;
 }
 
 .active {
   background-color: #1258ff;
+}
+
+.input-container {
+  display: flex;
+  padding: 14px;
+  width: 333px;
+  border: 2px solid #EBEFF4;
+  border-radius: 7px;
+}
+
+.input {
+  border: none;
+}
+
+.input::placeholder {
+  line-height: 21px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.search-icon {
+  height: 15px;
+  width: 15px;
+  padding-right: 5px;
+}
+
+.content-container {
+  margin-top: 21px;
 }
 </style>
