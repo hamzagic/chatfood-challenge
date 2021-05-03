@@ -51,12 +51,22 @@ describe("FoodMenu.vue", () => {
     expect(wrapper.findAll(".dish-title")).toHaveLength(items.length);
   });
 
+  it('calls addToBasket when clicking on a dish title', () => {
+    wrapper.vm.addToBasket = jest.fn();
+    const listItems = wrapper.findAll(".dish-title");
+    listItems[0].trigger('click');
+    expect(wrapper.vm.addToBasket).toHaveBeenCalled();
+  });
+
   it("saves the item and quantity on local storage", () => {
     const listItems = wrapper.findAll(".dish-title");
-    const item = listItems[0].text();
-    fakeLocalStorage.localStorage.setItem(item, wrapper.vm.count);
+    const itemText = listItems[0].text();
+    wrapper.vm.addToBasket = jest.fn(fakeLocalStorage.localStorage.setItem(itemText, wrapper.vm.count));
+    listItems[0].trigger('click');
     
     const key = Object.keys(fakeLocalStorage.localStorage.data);
-    expect(key).toContain(item);
+    const value = parseInt(Object.values(fakeLocalStorage.localStorage.data));
+    expect(key).toContain(itemText);
+    expect(value).toBe(wrapper.vm.count);
   });
 });

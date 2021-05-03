@@ -75,6 +75,7 @@ export default {
     addToBasket(item) {
       this.itemCount = localStorage.getItem(item.name);
       if (!this.itemCount) {
+        console.log("New item added");
         return localStorage.setItem(item.name, this.count);
       }
 
@@ -82,6 +83,7 @@ export default {
         this.itemCount &&
         item.stock.availability > parseInt(this.itemCount)
       ) {
+        console.log("Item added")
         return localStorage.setItem(item.name, parseInt(this.itemCount) + 1);
       } else {
         return console.log("Item unavailable");

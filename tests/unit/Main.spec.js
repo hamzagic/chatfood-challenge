@@ -35,6 +35,7 @@ describe("Main.vue", () => {
 
   it("clears local storage when calling resetBasket", () => {
     wrapper.vm.resetBasket = jest.fn(fakeLocalStorage.localStorage.clear());
+    expect(wrapper.vm.resetBasket.mock.calls).toBe(true);
     expect(fakeLocalStorage.localStorage.data).toMatchObject({});
   });
 });
