@@ -45,12 +45,15 @@
 </template>
 
 <script>
-import menuData from "../data/menu.json";
+import menuData from "@/data/menu.json";
+import formatPrice from '@/mixins/formatPrice';
+import calculateDiscount from '@/mixins/calculateDiscount';
 
 export default {
   name: "FoodMenu",
   components: {},
   props: {},
+  mixins: [formatPrice, calculateDiscount],
   data() {
     return {
       queryInput: "",
@@ -65,13 +68,6 @@ export default {
     this.items = this.fullMenu[1];
   },
   methods: {
-    formatPrice(value) {
-      return (value / 100).toFixed(2);
-    },
-    calculateDiscount(value, discount) {
-      this.newValue = value - value * discount;
-      return (this.newValue / 100).toFixed(2);
-    },
     addToBasket(item) {
       this.itemCount = localStorage.getItem(item.name);
       if (!this.itemCount) {

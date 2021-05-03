@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../assets/Back.svg" alt="arrow" @click="resetBasket()" class="back" />
+    <img src="@/assets/Back.svg" alt="arrow" @click="resetBasket()" class="back" />
     <div class="container">
       <FoodMenu />
     </div>
@@ -31,5 +31,6 @@ export default {
 .back {
   margin-top: 49px;
   padding: 0px 16px;
+  cursor: pointer;
 }
 </style>
