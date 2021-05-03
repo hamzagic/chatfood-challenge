@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-for="(cat, id) in categories" :key="id" class="content-container">
-      <div class="titles horizontal-padding">{{ cat.name }}</div>
+      <div class="titles horizontal-padding" id="categories" >{{ cat.name }}</div>
       <div v-for="(item, id) in queryResult" :key="id">
         <div v-if="item.category_id == cat.id" class="item-container">
           <div class="item-data">
@@ -56,6 +56,7 @@ export default {
       queryInput: "",
       count: 1,
       itemCount: 0,
+      fullMenu: null
     };
   },
   created() {
